@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+                    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link id="links" rel="stylesheet" type="text/css" href="css/PaginaDeCadastro_Style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+th,td {
+  padding: 5px;
+
+}
+th{
+  background-color: grey;
+
+}
+.clsexcluir{
+color:#ffffff;
+background:#db1515;
+border:0px solid #ffffff;
+border-radius:10px 10px 10px 10px;
+width:62px;
+padding:10px 13px;
+cursor:pointer;
+margin:0 auto;
+}
+.editar{
+
+color:#ffffff;
+background:blue;
+border:0px solid #ffffff;
+border-radius:10px 10px 10px 10px;
+width:62px;
+padding:10px 13px;
+cursor:pointer;
+margin:0 auto;
+}
+.edicao{
+  text-align: center;
+}
+body{
+  text-align: center;
+}
+
+#newProduto{
+  color:#ffffff;
+background:blue;
+border:1px solid #ffffff;
+border-radius:5px 5px 5px 5px;
+width:80px;
+padding:10px 13px;
+cursor:pointer;
+margin:0 auto;
+
+}
+#cabecario{
+  background-color: blue;
+}
+</style>
+<body>
+   <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+  <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()"
+  class="w3-bar-item w3-button">Fechar Menu</a>
+    <a href="index.html" onclick="w3_close()" class="w3-bar-item w3-button">Home</a>
+
+</nav>
+<h2>Ajax Crud</h2>
+
+<br><br>
+<button id="newProduto" style="text-align: center;float: right;">Novo Produto</button>
+<div id="edicao" >
+  <h2>edição</h2>
+<form action="#">
+    </form>
+         Nome
+    <input type="text" id="editNome" name="editNome" placeholder="Nome">
+
+   Descricao
+    <input type="text" id="editDescricao" name="editDescricao" placeholder="Descricao">
+    
+    Preço
+    <input type="text"  id="editPreco" name="editPreco" placeholder="valor">
+    
+    Quantidade em Estoque
+    <input type="text" id="editqtdInEstoque" name="editqtdInEstoque">
+    
+        <button type="button" id="Salvar">Salvar</button>
+ </div>
+<table id="demo" style="text-align: center;width: 50%;margin: auto;"></table>
+<p id="botoes"></p>
+<button id="antes">antes</button>
+<button id="depois">proximo</button>
+<div id="cadastro">
+<h3>Cadastro</h3>
+<form action="#">
+
+    Nome
+    <input type="text" id="Nome" name="Nome" placeholder="Nome">
+
+   Descricao
+    <input type="text" id="Descricao" name="Descricao" placeholder="Descricao">
+    
+    Preço
+    <input type="text"  id="Preco" name="Preco" placeholder="valor">
+    
+    Quantidade em Estoque
+    <input type="text" id="qtdInEstoque" name="qtdInEstoque">
+    
+    
+        <button type="button" id="Enviar">Enviar</button>
+    </form>
+ </div>
+<script>
+  var u=1;
+  var edit;
+  $(document).ready(function(){
+    
+
+        $("#edicao").hide();
+        $("#cadastro").hide();
+
+  carregar();
+
+function carregar(){
+     $.get("https://clienteweb2017.000webhostapp.com/crud_ajax_json/getDadosProdutos.php?page="+u+"&num_rec_per_page=10")
+    .done(function(data, status){
+      var obj = JSON.parse(data);
+      console.log(obj);
+      montarTabela(obj);
+      
+    })
+    .fail(function(){
+       alert("problema de conexão");
+    });
+
+  }
+  
+  function montarTabela(obj) {
+  var i;
+  var table="<tr style='background-color=blue'><th colspan='7'id='cabecario'>Produtos</tr><tr><th>Id</th><th>Nome</th><th>Descrição</th><th>Preco</th><th>QtdEstoque</th><th>Editar</th><th>Remover</th></tr>";
+
+  ////////////////// PAREI A EDICAO AQUI
+  for (produto of obj.data) { 
+    table += "<tr><td>" +produto.id +"</td><td>" +produto.nome +"</td><td>"+ produto.descricao 
+    +"</td><td>"+ produto.preco + "</td><td>"+produto.qtdestoque+"</td><td></button><button class='editar'>editar</td> <td><button class='clsexcluir'>remover</button></td></tr>";
+  }
+    $("#demo").html(table);
+
+
+  }
+  $("#depois").click(function(){
+    u++;
+    if(u>=1)
+  carregar();
+  })
+  $("#antes").click(function(){
+    u--;
+    if(u>=1)
+    carregar();
+  })
+  ///////////////////////////////////// REMOCAO////////////////////////////////////////
+   $("body").on("click", ".clsexcluir", function(){
+  var Pid=$(this).parent().siblings(0).html();
+    
+  $.get("https://clienteweb2017.000webhostapp.com/crud_ajax_json/deleteProduto.php?id=" + Pid)
+  .done(function(){
+       alert("Removido!!!");
+    carregar();
+  })
+  .fail(function(){
+      alert("ERRO!!!");
+  });
+  
+  });
+    ///////////////////////////////////CRIACAO//////////////////////////////////////////////////////
+    $("#newProduto").click(function(){
+        $("#cadastro").show();
+        alert("preencha o form a baixo")
+    
+
+    });
+    $("#Enviar").click(function(){
+            $("#cadastro").hide();
+
+               busca();// acha um id e cria um novo produto;
+    carregar();
+    })
+    function busca(){
+      var cont=0
+      
+      $.get("https://clienteweb2017.000webhostapp.com/crud_ajax_json/getDadosProdutos.php")
+                .done(function(data){
+                  var item=0;
+                var myobj= JSON.parse(data);
+                var tamVetProd= myobj.data.length;
+                  for (produto of myobj.data) { 
+                    if (item<=produto.id)
+                          item=produto.id;
+                    if (cont==9) 
+                        break;
+
+                                        console.log(cont+"/"+"prod"+produto.id);
+                                                        console.log(cont+"/"+"item"+item);
+                                                        cont++
+
+
+                }
+                item++;
+                console.log("item final"+item);
+                newProduto(item);
+                });
+    }
+    function newProduto(P_id){
+
+
+
+    var nome=$("#Nome").val();
+    var descricao=$("#Descricao").val();
+    var preco=Number($("#Preco").val());
+    var qtd=Number($("#qtdInEstoque").val());
+    $.get("https://clienteweb2017.000webhostapp.com/crud_ajax_json/createProduto.php?id="+P_id+"&nome="+nome+"&descricao="+descricao+"&preco="+preco+"&qtdestoque="+qtd)
+      .done(function(data,status){
+        alert("cadastrado com"+status+data);
+
+      })
+          carregar();
+      }
+///////////////////////////////////////////// EDICAO ///////////////////////////////////////////////
+   
+   $("body").on("click", ".editar", function(){
+        $("#edicao").show();
+          edit=$(this).parent().siblings(0).html();
+        alert("preencha o form a cima");
+
+
+
+       })
+       $("#Salvar").click(function(){
+          $("#edicao").hide();
+          upProduto(edit);
+          carregar();
+
+       })
+       function upProduto(P_id){
+        
+            var editnome=$("#editNome").val();
+            var editdescricao=$("#editDescricao").val();
+            var editpreco=Number($("#editPreco").val());
+            var editqtd=Number($("#editqtdInEstoque").val());       
+           
+          $.get("https://clienteweb2017.000webhostapp.com/crud_ajax_json/updateProduto.php?id="+P_id+"&nome="+editnome+"&descricao="+editdescricao+"&preco="+editpreco+"&qtdestoque="+editqtd)
+                .done(function(data, status){
+                    alert("edição concluida!");
+                    
+                })
+                .fail(function(data, status){
+                     alert("Falha na edicao Tente Novamente!");
+                });
+       }
+
+
+
+});//ready
+function w3_open(){
+           $("#mySidebar").show();
+      }
+ 
+function w3_close() {
+    $("#mySidebar").hide();
+  }
+</script>
+
+</body>
+</html>

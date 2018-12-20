@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<title>TecStore</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link id="links" rel="stylesheet" type="text/css" href="css/PaginaDeCadastro_Style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<style></style>
+<body >
+
+<!-- Sidebar (hidden by default) -->
+<nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()"
+  class="w3-bar-item w3-button">Fechar Menu</a>
+  <a href="PaginaInstitucional.html" onclick="w3_close()" class="w3-bar-item w3-button">Pagina Institucional</a>
+  <a href="index.html" onclick="w3_close()" class="w3-bar-item w3-button">Home</a>
+</nav>
+
+<!-- Top menu -->
+<div class="w3-top">
+  <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+    <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+    <div class="w3-right w3-padding-16">
+        <a id="links" href="PaginaDeCadastro.html">Cadastre-se</a>
+    </div>
+    <div class="w3-center w3-padding-16"><a id="links" href="index.html">
+            TecStore
+           <img src="img/logo.jpg" alt="Logo"style="width: 10%">
+        </a>
+    </div>
+
+  </div>
+</div>
+  
+<!-- !PAGE CONTENT! -->
+<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
+
+<h3>Faça seu cadastro para compra </h3>
+
+<div id="formulario">
+  <form action="/" method="post"><!--ver o link que vai aqui-->
+    <label for="primeiroNome">Nome</label>
+    <input type="text" id="primeiroNome" name="firstname" placeholder="Nome" maxlength="20">
+
+    <label for="segundoNome">Sobre Nome</label>
+    <input type="text" id="segundoNome" name="SobreNome" placeholder="Segundo Nome" maxlength="20">
+    
+    <label for="cadastroUnico">CPF</label>
+    <input type="text" name="CPF" placeholder="Pode ser inserido nº e traços">
+    
+    <label for="Endereco">Endereço</label>
+    <input type="text" name="Endereço" maxlength="200">
+    
+    <label for="Telefone">Telefone</label>
+    <input type="text" name="telefone" maxlength="11" placeholder="(xx)x xxxx xxxx"><br>  <!-- validar-->
+
+    <label for="Email">Email</label>
+    <input type="email" name="Email" placeholder="nome@email.com" required><br>
+
+  <label for="genero">Sexo</label>
+    <div id="radios">
+        <input type="radio" name="genero" value="masculino">Masculino<br>
+        <input type="radio" name="genero" value="feminino">Feminino<br>
+        <input type="radio" name="genero" value="outro">Outros<br>
+    </div>
+    <label for="TipoFavoritoDeNote">Tipo favorito de notebook</label>
+    <select id="TipoFavoritoDeNote" name="TipoNote">
+      <option value="gamer">Gamer</option>
+      <option value="intermediario">Intermediario</option>
+      <option value="basico">Básico</option>
+    </select>
+  
+    <input type="submit" value="Cadastrar">
+  </form>
+</div>
+
+<!-- End page content -->
+</div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+
+</body>
+</html>
