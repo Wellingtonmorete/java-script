@@ -1,4 +1,5 @@
 <?php
-echo"Wellington!jkh!"
+<<<<<<< HEAD
+echo"Wellington!!"
 echo "moooooooooooreeeeeeteeeeee";
 ?>
