@@ -1,3 +1,3 @@
 <?php
-echo"Wellington!jkh!"
+echo"Wellington!!"
 ?>
